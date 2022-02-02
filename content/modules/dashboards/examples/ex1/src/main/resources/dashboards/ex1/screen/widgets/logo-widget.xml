@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- tag::logo-widget[] -->
+<fragment xmlns="http://jmix.io/schema/ui/fragment">
+    <layout>
+        <image>
+            <resource>
+                <classpath path="dashboards/ex1/screen/widgets/image/jmix-logo.png"/>
+            </resource>
+        </image>
+    </layout>
+</fragment>
+<!-- end::logo-widget[] -->

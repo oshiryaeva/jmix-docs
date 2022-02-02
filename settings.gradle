@@ -9,6 +9,9 @@ project(':bpm-ex1').projectDir = new File(settingsDir, 'content/modules/bpm/exam
 include ':charts-ex1'
 project(':charts-ex1').projectDir = new File(settingsDir, 'content/modules/charts/examples/ex1')
 
+include ':dashboards-ex1'
+project(':dashboards-ex1').projectDir = new File(settingsDir, 'content/modules/dashboards/examples/ex1')
+
 include ':data-access-ex1'
 project(':data-access-ex1').projectDir = new File(settingsDir, 'content/modules/data-access/examples/ex1')
 

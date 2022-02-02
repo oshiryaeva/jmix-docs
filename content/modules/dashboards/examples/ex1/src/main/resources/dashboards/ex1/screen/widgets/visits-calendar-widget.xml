@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://jmix.io/schema/ui/fragment"
+          xmlns:c="http://jmix.io/schema/ui/jpql-condition">
+    <data>
+        <collection id="visitsDc" class="dashboards.ex1.entity.Visit">
+            <fetchPlan extends="_base">
+                <property name="caption"/>
+            </fetchPlan>
+            <loader id="visitsDl">
+                <query>
+                    <![CDATA[select e from sample_Visit e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout expand="vBox">
+        <vbox id="vBox" expand="visitsCalendar" spacing="true">
+            <hbox id="hBox" width="100%" align="MIDDLE_CENTER">
+                <label value="msg://dashboards.ex1.screen.widgets/monthPicker.caption" align="MIDDLE_LEFT" height="100%"/>
+                <datePicker id="monthPicker" width="100%" height="100%"
+                            resolution="MONTH"/>
+            </hbox>
+            <calendar id="visitsCalendar"
+                      caption="msg://dashboards.ex1.screen.widgets/calendar.caption"
+                      width="100%"
+                      startDate="2022-01-03"
+                      endDate="2022-01-09"
+                      dataContainer="visitsDc"
+                      navigationButtonsVisible="true"
+                      lastVisibleHourOfDay="18"
+                      firstVisibleHourOfDay="8"
+                      endDateProperty="endDate"
+                      captionProperty="caption"
+                      startDateProperty="startDate"/>
+        </vbox>
+    </layout>
+</fragment>

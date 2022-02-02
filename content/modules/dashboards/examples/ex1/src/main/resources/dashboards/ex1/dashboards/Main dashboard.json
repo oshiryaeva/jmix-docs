@@ -1,0 +1,156 @@
+{
+  "id": "e6b6f5b0-a480-6fcb-20d9-cb2ca844ba1f",
+  "title": "Main dashboard",
+  "code": "main-dashboard",
+  "visualModel": {
+    "id": "43957f27-1206-f41c-cab2-038b42f30b09",
+    "children": [
+      {
+        "className": "io.jmix.dashboards.model.visualmodel.ResponsiveLayout",
+        "data": {
+          "xs": 12,
+          "sm": 6,
+          "md": 6,
+          "lg": 6,
+          "areas": [
+            {
+              "id": "a36256ba-e0dd-e79e-92c9-b43d541c0c8a",
+              "component": {
+                "className": "io.jmix.dashboards.model.visualmodel.WidgetLayout",
+                "data": {
+                  "widget": {
+                    "id": "d573ffda-068a-36a0-fd48-52e420864fde",
+                    "showWidgetCaption": false,
+                    "widgetId": "1",
+                    "caption": "Cubone",
+                    "name": "Pokemon Art",
+                    "description": null,
+                    "parameters": [],
+                    "widgetFields": [],
+                    "fragmentId": "sample_ArtWidget",
+                    "createdBy": "admin"
+                  },
+                  "id": "62925e69-6c52-1050-fd00-0b2b7ceb993e",
+                  "children": [],
+                  "weight": 1,
+                  "expand": null,
+                  "styleName": null,
+                  "width": 100,
+                  "height": 100,
+                  "widthUnit": "%",
+                  "heightUnit": "%"
+                }
+              },
+              "order": 1,
+              "xs": 12,
+              "sm": 6,
+              "md": 6,
+              "lg": 6
+            },
+            {
+              "id": "bfe7e248-3488-74b5-7600-172bc30f2252",
+              "component": {
+                "className": "io.jmix.dashboards.model.visualmodel.WidgetLayout",
+                "data": {
+                  "widget": {
+                    "id": "c0e5dd90-e948-9b96-1199-d578f68a98c8",
+                    "showWidgetCaption": false,
+                    "widgetId": "random-joke",
+                    "caption": "Random joke",
+                    "name": "Random Joke",
+                    "description": null,
+                    "parameters": [],
+                    "widgetFields": [],
+                    "fragmentId": "sample_RandomJokeWidget",
+                    "createdBy": "admin"
+                  },
+                  "id": "5ce7cf51-1834-2664-ea05-14f2d170f703",
+                  "children": [],
+                  "weight": 1,
+                  "expand": null,
+                  "styleName": null,
+                  "width": 100,
+                  "height": 100,
+                  "widthUnit": "%",
+                  "heightUnit": "%"
+                }
+              },
+              "order": 2,
+              "xs": null,
+              "sm": null,
+              "md": null,
+              "lg": null
+            },
+            {
+              "id": "e512c909-a7a2-81bb-f7c0-2324f8273add",
+              "component": {
+                "className": "io.jmix.dashboards.model.visualmodel.WidgetLayout",
+                "data": {
+                  "widget": {
+                    "id": "1e5cf282-5fd9-1a95-3649-c5506c06cd12",
+                    "showWidgetCaption": false,
+                    "widgetId": "visits-calendar",
+                    "caption": "Visits calendar",
+                    "name": "Visits Calendar",
+                    "description": null,
+                    "parameters": [],
+                    "widgetFields": [],
+                    "fragmentId": "sample_VisitsCalendarWidget",
+                    "createdBy": "admin"
+                  },
+                  "id": "ee283aa4-a522-4e6b-bb28-ddb6ed05eb97",
+                  "children": [],
+                  "weight": 1,
+                  "expand": null,
+                  "styleName": null,
+                  "width": 100,
+                  "height": 100,
+                  "widthUnit": "%",
+                  "heightUnit": "%"
+                }
+              },
+              "order": 3,
+              "xs": 12,
+              "sm": 12,
+              "md": 12,
+              "lg": 12
+            }
+          ],
+          "id": "ab89963c-596e-d085-a930-cf424d072cd8",
+          "children": [],
+          "weight": 1,
+          "expand": null,
+          "styleName": null,
+          "width": 100,
+          "height": 100,
+          "widthUnit": "%",
+          "heightUnit": "%"
+        }
+      }
+    ],
+    "weight": 1,
+    "expand": null,
+    "styleName": null,
+    "width": 100,
+    "height": 100,
+    "widthUnit": "%",
+    "heightUnit": "%"
+  },
+  "parameters": [
+    {
+      "id": "1720f4bc-3a82-4f35-3843-bb69fc507c3e",
+      "name": "Font size",
+      "alias": "font-size",
+      "value": {
+        "className": "io.jmix.dashboards.model.parameter.type.StringParameterValue",
+        "data": {
+          "value": "Huge"
+        }
+      }
+    }
+  ],
+  "isAvailableForAllUsers": true,
+  "createdBy": "admin",
+  "timerDelay": 10,
+  "assistantBeanName": "sample_VisitScheduleAssistant"
+}

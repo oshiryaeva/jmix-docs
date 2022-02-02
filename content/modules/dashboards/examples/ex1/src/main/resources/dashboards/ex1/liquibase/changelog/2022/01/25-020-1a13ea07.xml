@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="sample">
+        <createTable tableName="SAMPLE_OWNER">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SAMPLE_OWNER"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="ADDRESS" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="sample">
+        <createTable tableName="SAMPLE_PET">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SAMPLE_PET"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="BIRTHDATE" type="DATE"/>
+            <column name="OWNER_ID" type="UUID"/>
+            <column name="PICTURE" type="VARCHAR(1024)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="sample">
+        <createTable tableName="SAMPLE_VET">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SAMPLE_VET"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="sample">
+        <createTable tableName="SAMPLE_VISIT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SAMPLE_VISIT"/>
+            </column>
+            <column name="END_DATE" type="DATETIME"/>
+            <column name="START_DATE" type="DATETIME"/>
+            <column name="PET_ID" type="UUID"/>
+            <column name="VET_ID" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="5" author="sample">
+        <addForeignKeyConstraint baseColumnNames="OWNER_ID" baseTableName="SAMPLE_PET"
+                                 constraintName="FK_SAMPLE_PET_ON_OWNER" referencedColumnNames="ID"
+                                 referencedTableName="SAMPLE_OWNER"/>
+
+        <createIndex indexName="IDX_PET_OWNER_ID" tableName="SAMPLE_PET">
+            <column name="OWNER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="6" author="sample">
+        <addForeignKeyConstraint baseColumnNames="PET_ID" baseTableName="SAMPLE_VISIT"
+                                 constraintName="FK_SAMPLE_VISIT_ON_PET" referencedColumnNames="ID"
+                                 referencedTableName="SAMPLE_PET"/>
+
+        <createIndex indexName="IDX_VISIT_PET_ID" tableName="SAMPLE_VISIT">
+            <column name="PET_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="7" author="sample">
+        <addForeignKeyConstraint baseColumnNames="VET_ID" baseTableName="SAMPLE_VISIT"
+                                 constraintName="FK_SAMPLE_VISIT_ON_VET" referencedColumnNames="ID"
+                                 referencedTableName="SAMPLE_VET"/>
+
+        <createIndex indexName="IDX_VISIT_VET_ID" tableName="SAMPLE_VISIT">
+            <column name="VET_ID"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

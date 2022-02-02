@@ -1,0 +1,63 @@
+{
+  "id": "2b7ae165-c9c9-b540-e82f-fc0578343fab",
+  "title": "Visits dashboard",
+  "code": "visits-dashboard",
+  "visualModel": {
+    "id": "fd8e9166-ed2a-caa4-1e54-31951e532c21",
+    "children": [
+      {
+        "className": "io.jmix.dashboards.model.visualmodel.VerticalLayout",
+        "data": {
+          "id": "87cc2a37-fbdb-5968-66ae-2058ca1b7477",
+          "children": [
+            {
+              "className": "io.jmix.dashboards.model.visualmodel.WidgetLayout",
+              "data": {
+                "widget": {
+                  "id": "2c8c92a5-c768-fec0-90d8-12cede6bbd11",
+                  "showWidgetCaption": false,
+                  "widgetId": "visits-calendar",
+                  "caption": "Visits calendar",
+                  "name": "Visits Calendar",
+                  "description": null,
+                  "parameters": [],
+                  "widgetFields": [],
+                  "fragmentId": "sample_VisitsCalendarWidget",
+                  "createdBy": "admin"
+                },
+                "id": "8c0ff140-b860-f1f6-bb28-7f6d7a85d202",
+                "children": [],
+                "weight": 1,
+                "expand": null,
+                "styleName": null,
+                "width": 100,
+                "height": 100,
+                "widthUnit": "%",
+                "heightUnit": "%"
+              }
+            }
+          ],
+          "weight": 1,
+          "expand": null,
+          "styleName": null,
+          "width": 100,
+          "height": 100,
+          "widthUnit": "%",
+          "heightUnit": "%"
+        }
+      }
+    ],
+    "weight": 1,
+    "expand": null,
+    "styleName": null,
+    "width": 100,
+    "height": 100,
+    "widthUnit": "%",
+    "heightUnit": "%"
+  },
+  "parameters": [],
+  "isAvailableForAllUsers": true,
+  "createdBy": "admin",
+  "timerDelay": 15,
+  "assistantBeanName": "sample_VisitScheduleAssistant"
+}

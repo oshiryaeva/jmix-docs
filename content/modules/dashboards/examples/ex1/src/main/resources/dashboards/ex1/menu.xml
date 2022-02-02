@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://jmix.io/schema/ui/menu">
+
+    <menu id="application" caption="msg://dashboards.ex1/menu.application" insertBefore="administration">
+        <item screen="dboards_User.browse" caption="msg://dashboards.ex1.screen.user/UserBrowse.caption"/>
+        <item screen="themeSettingsScreen" caption="msg://io.jmix.ui.app.themesettings/themeSettings.caption"/>
+        <item screen="sample_Vet.browse" caption="msg://dashboards.ex1.screen.vet/vetBrowse.menu"/>
+        <item screen="sample_Owner.browse" caption="msg://dashboards.ex1.screen.owner/ownerBrowse.menu"/>
+        <item screen="sample_Pet.browse" caption="msg://dashboards.ex1.screen.pet/petBrowse.menu"/>
+        <item screen="sample_Visit.browse" caption="msg://dashboards.ex1.screen.visit/visitBrowse.menu"/>
+    </menu>
+
+</menu-config>

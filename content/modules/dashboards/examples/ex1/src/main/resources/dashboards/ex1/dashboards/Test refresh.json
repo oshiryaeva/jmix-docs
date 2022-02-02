@@ -1,0 +1,375 @@
+{
+  "id": "36f33836-dfbd-dfba-b098-c5eb8087fa11",
+  "title": "Test refresh",
+  "code": "test",
+  "visualModel": {
+    "id": "c0eca8ca-2fea-954c-9501-c180c494a53b",
+    "children": [
+      {
+        "className": "io.jmix.dashboards.model.visualmodel.VerticalLayout",
+        "data": {
+          "id": "96cb2a11-9fa9-651c-812d-8a1173d8c479",
+          "children": [
+            {
+              "className": "io.jmix.dashboards.model.visualmodel.WidgetLayout",
+              "data": {
+                "widget": {
+                  "id": "1418c211-ab07-61eb-f165-ccad5d16b06a",
+                  "showWidgetCaption": false,
+                  "widgetId": "1",
+                  "caption": "1",
+                  "name": "Random Joke",
+                  "description": null,
+                  "parameters": [],
+                  "widgetFields": [],
+                  "fragmentId": "sample_RandomJokeWidget",
+                  "createdBy": "admin"
+                },
+                "id": "a6e45738-a241-6571-a836-fccf055ab12b",
+                "children": [],
+                "weight": 1,
+                "expand": null,
+                "styleName": null,
+                "width": 100,
+                "height": 100,
+                "widthUnit": "%",
+                "heightUnit": "%"
+              }
+            }
+          ],
+          "weight": 1,
+          "expand": null,
+          "styleName": null,
+          "width": 100,
+          "height": 100,
+          "widthUnit": "%",
+          "heightUnit": "%"
+        }
+      },
+      {
+        "className": "io.jmix.dashboards.model.visualmodel.HorizontalLayout",
+        "data": {
+          "id": "612a69e9-7957-7742-c49b-8fc80c7b1795",
+          "children": [
+            {
+              "className": "io.jmix.dashboards.model.visualmodel.WidgetLayout",
+              "data": {
+                "widget": {
+                  "id": "89d51ca3-279f-05b2-606d-bf99c0a1905a",
+                  "showWidgetCaption": false,
+                  "widgetId": "2",
+                  "caption": "2",
+                  "name": "Random Joke",
+                  "description": null,
+                  "parameters": [],
+                  "widgetFields": [],
+                  "fragmentId": "sample_RandomJokeWidget",
+                  "createdBy": "admin"
+                },
+                "id": "543645bd-cf42-7528-36d6-d8b0726120f9",
+                "children": [],
+                "weight": 1,
+                "expand": null,
+                "styleName": null,
+                "width": 100,
+                "height": 100,
+                "widthUnit": "%",
+                "heightUnit": "%"
+              }
+            }
+          ],
+          "weight": 1,
+          "expand": null,
+          "styleName": null,
+          "width": 100,
+          "height": 100,
+          "widthUnit": "%",
+          "heightUnit": "%"
+        }
+      },
+      {
+        "className": "io.jmix.dashboards.model.visualmodel.GridLayout",
+        "data": {
+          "rows": 2,
+          "columns": 2,
+          "areas": [
+            {
+              "id": "8cdf1009-b6bf-89b0-ca5f-f1de7e99c5d5",
+              "component": {
+                "row": 0,
+                "column": 0,
+                "colSpan": 0,
+                "rowSpan": 0,
+                "id": "ea025cac-d3ad-ccae-4b5e-a60a945a82b5",
+                "children": [
+                  {
+                    "className": "io.jmix.dashboards.model.visualmodel.WidgetLayout",
+                    "data": {
+                      "widget": {
+                        "id": "b1e9ce68-3d82-f421-4ae4-7e31c961239e",
+                        "showWidgetCaption": false,
+                        "widgetId": "3",
+                        "caption": "3",
+                        "name": "Random Joke",
+                        "description": null,
+                        "parameters": [],
+                        "widgetFields": [],
+                        "fragmentId": "sample_RandomJokeWidget",
+                        "createdBy": "admin"
+                      },
+                      "id": "862f4481-0a70-2d83-0748-cdf52f4c0b46",
+                      "children": [],
+                      "weight": 1,
+                      "expand": null,
+                      "styleName": null,
+                      "width": 100,
+                      "height": 100,
+                      "widthUnit": "%",
+                      "heightUnit": "%"
+                    }
+                  }
+                ],
+                "weight": 1,
+                "expand": null,
+                "styleName": null,
+                "width": 100,
+                "height": 100,
+                "widthUnit": "%",
+                "heightUnit": "%"
+              },
+              "row": 0,
+              "col": 0,
+              "col2": 0,
+              "row2": 0
+            },
+            {
+              "id": "6d5691c4-27f6-99cb-1e7b-42fa64a582c3",
+              "component": {
+                "row": 1,
+                "column": 1,
+                "colSpan": 0,
+                "rowSpan": 0,
+                "id": "bf1dfa15-5064-d763-e3d1-b9ed1ef0d407",
+                "children": [],
+                "weight": 1,
+                "expand": null,
+                "styleName": null,
+                "width": 100,
+                "height": 100,
+                "widthUnit": "%",
+                "heightUnit": "%"
+              },
+              "row": 1,
+              "col": 1,
+              "col2": 1,
+              "row2": 1
+            },
+            {
+              "id": "c60fcdb4-91ae-a7ea-114a-ba4b19d3d396",
+              "component": {
+                "row": 1,
+                "column": 0,
+                "colSpan": 0,
+                "rowSpan": 0,
+                "id": "dded623e-7457-65e0-a193-c4f16001f645",
+                "children": [],
+                "weight": 1,
+                "expand": null,
+                "styleName": null,
+                "width": 100,
+                "height": 100,
+                "widthUnit": "%",
+                "heightUnit": "%"
+              },
+              "row": 1,
+              "col": 0,
+              "col2": 0,
+              "row2": 1
+            },
+            {
+              "id": "b62d33b2-a3d6-b48b-9fd0-09ec3bd825fd",
+              "component": {
+                "row": 0,
+                "column": 1,
+                "colSpan": 0,
+                "rowSpan": 0,
+                "id": "7d1231b3-e4b6-dd42-31d3-dfb590002908",
+                "children": [],
+                "weight": 1,
+                "expand": null,
+                "styleName": null,
+                "width": 100,
+                "height": 100,
+                "widthUnit": "%",
+                "heightUnit": "%"
+              },
+              "row": 0,
+              "col": 1,
+              "col2": 1,
+              "row2": 0
+            }
+          ],
+          "id": "db041afd-1bde-376d-c012-e9580c8a5030",
+          "children": [],
+          "weight": 1,
+          "expand": null,
+          "styleName": null,
+          "width": 100,
+          "height": 100,
+          "widthUnit": "%",
+          "heightUnit": "%"
+        }
+      },
+      {
+        "className": "io.jmix.dashboards.model.visualmodel.CssLayout",
+        "data": {
+          "responsive": false,
+          "id": "7dafbfd4-988e-7ca6-be2d-808ab083c298",
+          "children": [
+            {
+              "className": "io.jmix.dashboards.model.visualmodel.WidgetLayout",
+              "data": {
+                "widget": {
+                  "id": "8cbc0c24-c85a-2a65-6402-60b15364268d",
+                  "showWidgetCaption": false,
+                  "widgetId": "4",
+                  "caption": "4",
+                  "name": "Random Joke",
+                  "description": null,
+                  "parameters": [],
+                  "widgetFields": [],
+                  "fragmentId": "sample_RandomJokeWidget",
+                  "createdBy": "admin"
+                },
+                "id": "6a93e203-5e87-7a86-ae7a-4dc0c06a9519",
+                "children": [],
+                "weight": 1,
+                "expand": null,
+                "styleName": null,
+                "width": 100,
+                "height": 100,
+                "widthUnit": "%",
+                "heightUnit": "%"
+              }
+            }
+          ],
+          "weight": 1,
+          "expand": null,
+          "styleName": null,
+          "width": 100,
+          "height": 100,
+          "widthUnit": "%",
+          "heightUnit": "%"
+        }
+      },
+      {
+        "className": "io.jmix.dashboards.model.visualmodel.CssLayout",
+        "data": {
+          "responsive": true,
+          "id": "0ba628b3-db83-6091-9c13-4e3298704918",
+          "children": [
+            {
+              "className": "io.jmix.dashboards.model.visualmodel.WidgetLayout",
+              "data": {
+                "widget": {
+                  "id": "e2b55a98-e964-7b9b-ea9b-a88e7a014cfa",
+                  "showWidgetCaption": false,
+                  "widgetId": "5",
+                  "caption": "5",
+                  "name": "Random Joke",
+                  "description": null,
+                  "parameters": [],
+                  "widgetFields": [],
+                  "fragmentId": "sample_RandomJokeWidget",
+                  "createdBy": "admin"
+                },
+                "id": "ef01e72e-c73c-54db-c01c-1c18f7046467",
+                "children": [],
+                "weight": 1,
+                "expand": null,
+                "styleName": null,
+                "width": 100,
+                "height": 100,
+                "widthUnit": "%",
+                "heightUnit": "%"
+              }
+            }
+          ],
+          "weight": 1,
+          "expand": null,
+          "styleName": null,
+          "width": 100,
+          "height": 100,
+          "widthUnit": "%",
+          "heightUnit": "%"
+        }
+      },
+      {
+        "className": "io.jmix.dashboards.model.visualmodel.ResponsiveLayout",
+        "data": {
+          "xs": 12,
+          "sm": 6,
+          "md": 6,
+          "lg": 3,
+          "areas": [
+            {
+              "id": "86fae009-5854-5fb1-d3a9-403ecf10ad9b",
+              "component": {
+                "className": "io.jmix.dashboards.model.visualmodel.WidgetLayout",
+                "data": {
+                  "widget": {
+                    "id": "aa91c062-8100-54f9-00b1-929e7fe6e99f",
+                    "showWidgetCaption": false,
+                    "widgetId": "6",
+                    "caption": "6",
+                    "name": "Random Joke",
+                    "description": null,
+                    "parameters": [],
+                    "widgetFields": [],
+                    "fragmentId": "sample_RandomJokeWidget",
+                    "createdBy": "admin"
+                  },
+                  "id": "e4630cc8-4d06-cb8a-fb9f-2aa2551a2f14",
+                  "children": [],
+                  "weight": 1,
+                  "expand": null,
+                  "styleName": null,
+                  "width": 100,
+                  "height": 100,
+                  "widthUnit": "%",
+                  "heightUnit": "%"
+                }
+              },
+              "order": 1,
+              "xs": null,
+              "sm": null,
+              "md": null,
+              "lg": null
+            }
+          ],
+          "id": "43eac5dc-f37d-6c73-7bdf-6b4a61b2822c",
+          "children": [],
+          "weight": 1,
+          "expand": null,
+          "styleName": null,
+          "width": 100,
+          "height": 100,
+          "widthUnit": "%",
+          "heightUnit": "%"
+        }
+      }
+    ],
+    "weight": 1,
+    "expand": null,
+    "styleName": null,
+    "width": 100,
+    "height": 100,
+    "widthUnit": "%",
+    "heightUnit": "%"
+  },
+  "parameters": [],
+  "isAvailableForAllUsers": true,
+  "createdBy": "admin",
+  "timerDelay": 2,
+  "assistantBeanName": null
+}

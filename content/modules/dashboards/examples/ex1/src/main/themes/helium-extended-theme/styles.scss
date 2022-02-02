@@ -1,0 +1,8 @@
+@import "helium-extended-theme-defaults";
+@import "addons";
+@import "helium-extended-theme";
+
+.helium-extended-theme {
+  @include addons;
+  @include helium-extended-theme;
+}
