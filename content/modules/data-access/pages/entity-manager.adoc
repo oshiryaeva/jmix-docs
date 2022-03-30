@@ -1,3 +1,43 @@
 = Using EntityManager
 
-Coming soon
+`EntityManager` is the standard JPA interface used to interact with the persistence context. An instance of `EntityManager` contains a _persistence context_ – a set of instances loaded from the database or newly created. The persistence context is a data cache within a transaction. `EntityManager` automatically flushes to the database all changes made in its persistence context on the transaction commit or when the `EntityManager.flush()` method is called.
+
+You can obtain an instance of `EntityManager` using the injection with `@PersistenceContext` annotation, for example:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/dataaccess/ex1/bean/EMService.java[tags=em-inject]
+----
+
+Such instance is container-managed, this means the Spring Container is in charge of beginning the transaction, committing or rolling it back, and closing the `EntityManager`, thus no manual setup or cleanup is required:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/dataaccess/ex1/bean/EMService.java[tags=em-persist]
+----
+
+The API of `EntityManager` includes the following methods:
+
+* `clear()` - clears the persistence context so that all `Managed` entities become `Detached`.
+* `createNativeQuery()` – creates a `Query` object to execute an SQL query.
+* `createQuery()` – creates a `Query` or `TypedQuery` object for executing a JPQL query.
+* `detach()` - removes the given entity from the persistence context so that the `Managed` entity becomes `Detached`.
+* `find()` – loads an entity instance by its identifier.
++
+By default, only the local attributes of the entity instance are loaded. To load reference attributes (or, on the contrary, exclude unnecessary local attributes), pass the required xref:data-access:fetching.adoc#fetch-plan[fetch plan] explicitly as the parameter, for example:
++
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/dataaccess/ex1/bean/EMService.java[tags=em-find]
+----
+* `flush()` - synchronizes the persistence context to the underlying database.
+* `getTransaction()` – returns an `EntityTransaction` object which represents the current transaction.
+* `joinTransaction()` - indicates to the entity manager that a JTA transaction is active and joins the persistence context to it.
+* `merge()` – copies the state of detached instance to the persistence context the following way: an instance with the same identifier gets loaded from DB and the state of the passed `Detached` instance is copied into it and then the loaded `Managed` instance is returned. After that you should work with the returned `Managed` instance. The state of this entity will be stored in DB using `SQL UPDATE` on transaction commit.
+* `persist()` – adds a new instance of the entity to the persistence context. When the transaction is committed a corresponding record is created in DB using `SQL INSERT`.
++
+NOTE: The xref:data-access:entity-events.adoc#saving-loading-events[entity lifecycle events], such as  `EntitySavingEvent` and `EntityLoadingEvent`, are sent only when saving entities using xref:data-access:data-manager.adoc[DataManager]. If you persist or load entities using `EntityManager`, these events are not sent.
+* `refresh()` – reloads the state of the instance from the database, overwriting changes made to the entity.
+* `remove()` – removes an object from the database, or, if xref:data-model:entities.adoc#soft-delete-trait[soft deletion] mode is turned on, sets `deletedDate` and `deletedBy` attributes. If the passed instance is in `Detached` state, `merge()` is performed first.
+
+For the detailed information on `EntityManager` consult the https://docs.oracle.com/javaee/7/api/javax/persistence/EntityManager.html[javax.persistence.EntityManager^] documentation.

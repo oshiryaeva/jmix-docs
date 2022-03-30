@@ -10,7 +10,7 @@ Entity Log is a mechanism for tracking changes in your JPA entities. It records 
 [[register-changes]]
 == Registering Changes
 
-Entity Log automatically tracks changes of JPA entities when they are saved using xref:data-access:data-manager.adoc[DataManager]. It doesn't work if you use `EntityManager` or native SQL.
+Entity Log automatically tracks changes of JPA entities when they are saved using xref:data-access:data-manager.adoc[DataManager]. It doesn't work if you use xref:data-access:entity-manager.adoc[EntityManager] or native SQL.
 
 You can also use the `EntityLog` bean to register changed entities from your application code. In this case, invoke `registerCreate()`, `registerModify()` and `registerDelete()` methods with `auto` parameter set to false. When the entity log is called automatically by the framework, this parameter is set to true.
 

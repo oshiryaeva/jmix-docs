@@ -74,7 +74,7 @@ The `jmix-cuba` compatibility module provides the `com.haulmont.cuba.core.Persis
 [[entity-manager]]
 === EntityManager
 
-In Jmix, code working with JPA should use the standard JPA `EntityManager`, `Query` and `TypedQuery` interfaces. The `EntityManager` is obtained using injecton with `@PersistenceContext` annotation, for example:
+In Jmix, code working with JPA should use the standard JPA `EntityManager`, `Query` and `TypedQuery` interfaces. The `EntityManager` is obtained using injection with `@PersistenceContext` annotation, for example:
 
 [source,java]
 ----
