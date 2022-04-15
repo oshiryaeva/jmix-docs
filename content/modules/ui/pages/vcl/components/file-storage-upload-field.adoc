@@ -80,8 +80,9 @@ include::example$/ex1/src/main/java/ui/ex1/screen/component/filestorageuploadfie
 
 The component will upload the file to the temporary storage and invoke the `FileUploadSucceedEvent` listener.
 
-//todo add link to FileStorage
-`TemporaryStorage.putFileIntoStorage()` method moves the uploaded file from the temporary client storage to FileStorage. Parameters of this method are file identifier and file name. Both of these parameters are provided by `FileStorageUploadField`.
+`TemporaryStorage.putFileIntoStorage()` method moves the uploaded file from the temporary client storage to the default xref:files:file-storage.adoc[File Storage]. Parameters of this method are file identifier and file name. Both of these parameters are provided by `FileStorageUploadField`.
+
+CAUTION: The `ValueChangedEvent` is not fired automatically after uploading or clearing the `FileStorageUploadField` field with `MANUAL` put mode, because the `FileRef` value can be obtained only after uploading a file to the permanent file storage.
 
 [[file-storage]]
 === fileStorage
@@ -131,7 +132,7 @@ include::example$/ex1/src/main/resources/ui/ex1/screen/component/filestorageuplo
 [[file-size-limit]]
 === fileSizeLimit
 
-Maximum upload size is determined by the xref:app-properties.adoc#jmix-ui-component-upload-field-max-upload-size-mb[jmix.ui.component.uploadFieldMaxUploadSizeMb] application property and equals 20MB by default. If you select a file of a larger size, a corresponding message will be displayed, and the upload will be interrupted. To change the maximum upload size for concrete `fileStorageUploadField` use the `fileSizeLimit` attribute, which allows you to set the maximum allowed file size specified in bytes.
+Maximum upload size is determined by the xref:app-properties.adoc#jmix.ui.component.upload-field-max-upload-size-mb[jmix.ui.component.uploadFieldMaxUploadSizeMb] application property and equals 20MB by default. If you select a file of a larger size, a corresponding message will be displayed, and the upload will be interrupted. To change the maximum upload size for concrete `fileStorageUploadField` use the `fileSizeLimit` attribute, which allows you to set the maximum allowed file size specified in bytes.
 
 [source,xml,indent=0]
 ----
