@@ -4,5 +4,5 @@ In this section, we describe how to work with files uploaded to the system by us
 
 There are two ways to store files in a Jmix application:
 
-* In the database, using entity fields of the byte array type.
+* In the xref:files-in-database.adoc[database], using entity fields of the byte array type.
 * In a separate xref:file-storage.adoc[file storage] located in the local file system, in the cloud, or based on an external service. In this case, the file is bound to the data model using an entity attribute of the `FileRef` type.

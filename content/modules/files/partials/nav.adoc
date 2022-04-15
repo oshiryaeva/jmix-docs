@@ -1,3 +1,5 @@
 * xref:files:index.adoc[]
 ** xref:files:files-in-database.adoc[]
 ** xref:files:file-storage.adoc[]
+** xref:files:uploading-files.adoc[]
+** xref:files:downloading-files.adoc[]

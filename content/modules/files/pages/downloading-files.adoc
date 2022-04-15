@@ -1,0 +1,109 @@
+= Downloading Files
+
+In this section, we will show how to manage the file download process from the UI and via the dedicated programmatic interfaces.
+Consult the xref:rest:files-api.adoc[Files API] section to learn how to manage files through the REST API.
+
+[[download-from-storage]]
+== Downloading Files from Storage
+
+The `Downloader` bean is used to download files. Its `download()` method accepts the `FileRef` value and takes the file from the file storage, specified in the `FileRef` object. The name and type of the file are also encoded in `FileRef`, so the web browser correctly chooses whether to download or display the file.
+
+Suppose you want to download attached files right from the browser screen. In this case, add a xref:ui:vcl/components/table.adoc#table-column-generation[custom column] to the table in the browser screen:
+
+[source,xml,indent=0]
+----
+include::example$/ex1/src/main/resources/files/ex1/screen/attachment/attachment-browse.xml[tags=files]
+----
+
+and define the column generator:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/files/ex1/screen/attachment/AttachmentBrowse.java[tags=files]
+----
+<1> Use the `Downloader` bean to download files.
+<2> The `download()` method accepts the `FileRef` value and takes the file from the file storage specified in the `FileRef` object. The name and type of the file are also encoded in `FileRef`, so the web browser correctly chooses whether to download or display the file.
+
+[[download-byte-array]]
+== Downloading Files as Byte Array
+
+Besides `FileRef`, you can download files as byte arrays. It is the case, for example, of storing files xref:files-in-database.adoc[in database].  Generally, you should pass the byte array itself and the target file name. Defining the format is optional, as `FileRef` already contains the file type, but for byte arrays we recommend setting the download format explicitly:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/files/ex1/screen/attachment/AttachmentBrowse.java[tags=download-array]
+----
+
+To use a format not included in the https://docs.jmix.io/api/1.0/ui/io/jmix/ui/download/DownloadFormat.html[DownloadFormat^] default formats list, create an instance of `DownloadFormat` manually and pass it to the `download()` method, for example:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/files/ex1/screen/attachment/AttachmentBrowse.java[tags=download-format]
+----
+
+Additionally, the `Downloader` bean allows you to download resources directly from a web service. This option should be used only for small files, as the whole file is placed in memory while downloading:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/files/ex1/screen/attachment/AttachmentBrowse.java[tags=download-url]
+----
+
+[[db-download]]
+=== Downloading from Database
+
+Below is the complete example of downloading the file saved in DB as an entity attribute. We will use the same `Person` entity as described in xref:files-in-database.adoc[].
+
+The screen descriptor contains a button with a click handler:
+
+[source,xml,indent=0]
+----
+include::example$/ex1/src/main/resources/files/ex1/screen/person/person-edit.xml[tags=file-3]
+----
+
+By clicking on this button, the `download()` method is invoked to save the file from the data container to the file system:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/files/ex1/screen/person/PersonEdit.java[tags=file]
+----
+
+<1> Use the `Downloader` bean to download files.
+<2> Define the downloaded file name.
+<3> If you know the file format, specify it in the last argument of the `download()` method. Depending on the format, the web browser either downloads the file or shows it in a tab.
+
+[[view-files]]
+== Displaying Files
+
+=== In a New Window
+
+You can set in the `jmix.ui.viewFileExtensions` application property the list of file extensions that should always be displayed in a new browser tab instead of being downloaded, for example:
+
+[source,properties,indent=0]
+----
+jmix.ui.viewFileExtensions = txt, pdf, rtf, html
+----
+
+Another option is to use the `setShowNewWindow()` method: pass `true` if you want to open the file in a new tab regardless of its extension:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/files/ex1/screen/attachment/AttachmentBrowse.java[tags=show-file]
+----
+
+=== In the Same Tab
+
+Use the xref:ui:vcl/components/browser-frame.adoc[BrowserFrame] component to display content like web pages, PDF files, and images in the UI screen.
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/files/ex1/screen/attachment/AttachmentEdit.java[tags=browser-frame]
+----
+
+The files that cannot be displayed by `BrowserFrame` because of unsupported format will be instead downloaded to the file system. To avoid such behaviour, you can set the MIME type explicitly:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/files/ex1/screen/attachment/AttachmentEdit.java[tags=browser-frame-mime-type]
+----
+
+image::file-storage-browser-frame.png[align="center"]

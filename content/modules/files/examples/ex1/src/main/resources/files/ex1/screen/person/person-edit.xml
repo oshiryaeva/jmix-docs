@@ -28,7 +28,7 @@
                 width="800"/>
     <!-- tag::file-2[] -->
     <layout spacing="true">
-        <form dataContainer="personDc">
+        <form dataContainer="personDc" id="form">
             <column>
                 <textField id="nameField" property="name"/>
                 <fileUpload id="photoField" property="photo"/> <!--1-->
@@ -36,9 +36,13 @@
             <column>
                 <image dataContainer="personDc" property="photo"
                        height="300" width="300" scaleMode="CONTAIN"/> <!--2-->
+                <!-- end::file-2[] -->
+                <!-- tag::file-3[] -->
                 <linkButton id="downloadBtn" caption="Download"/>
+                <!-- end::file-3[] -->
+            <!-- tag::file-4[] -->
             </column>
-            <!-- end::file-2[] -->
+            <!-- end::file-4[] -->
         </form>
         <hbox id="editActions" spacing="true" height="100%">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>

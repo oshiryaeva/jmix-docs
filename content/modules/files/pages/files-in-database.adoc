@@ -2,11 +2,11 @@
 
 // todo Explain how to upload/download files in REST when https://github.com/Haulmont/jmix-core/issues/200 is fixed
 
-In this section, we will give an example of uploading and saving images to the application database. In addition, we will describe how images can be displayed in Jmix UI screens.
+The most common use case of storing files in the database is using entity fields of the byte array type.
 
 CAUTION: Save only small files in the database: thumbnails, icons, etc., because the whole file is placed in memory when it is uploaded or downloaded.
 
-Firstly, create an attribute of the byte array (`byte[]`) type in your entity, for example:
+Suppose you want to store small avatars for the `Person` entity. Firstly, create an attribute of the byte array (`byte[]`) type in your entity, for example:
 
 [source,java,indent=0]
 ----
@@ -15,23 +15,6 @@ include::example$/ex1/src/main/java/files/ex1/entity/Person.java[tags=file]
 
 When you run the application, Studio generates a database migration script for creating a corresponding column of the type appropriate for your database. For example, for PostgreSQL it is `bytea`.
 
-For uploading the file from a user interface, use the xref:ui:vcl/components/file-upload-field.adoc[] component bound to the entity attribute. If the file is an image, you can use the xref:ui:vcl/components/image.adoc[] component to display the image on the screen. For example:
+Now you can use the xref:ui:vcl/components/file-upload-field.adoc[] component bound to the `photo` attribute to upload the file from a user interface, and the `Downloader` bean to download the file from UI or a service. If you create an editor screen with Studio, the `FileUploadField` will be added to your screen automatically.
 
-[source,xml,indent=0]
-----
-include::example$/ex1/src/main/resources/files/ex1/screen/person/person-edit.xml[tags=file-1;file-2]
-----
-
-<1> `FileUploadField` component allows users to upload a file and store it in an entity attribute.
-<2> `Image` component displays the content of the entity attribute.
-
-If you want to be able to download the file, add a button and define its click handler as follows:
-
-[source,java,indent=0]
-----
-include::example$/ex1/src/main/java/files/ex1/screen/person/PersonEdit.java[tags=file]
-----
-
-<1> Use the `Downloader` bean to download files.
-<2> Define the downloaded file name.
-<3> If you know the file format, specify it in the last argument of the `download()` method. Depending on the format, the web browser either downloads the file or shows it in a tab.
+See the next sections of this documentation for more details.

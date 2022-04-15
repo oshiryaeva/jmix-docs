@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        caption="msg://filesScreen.caption">
+    <layout>
+        // tag::put-mode-manual[]
+        <fileStorageUpload id="fileField"
+                           property="image"
+                           fileStoragePutMode="MANUAL"/>
+        // end::put-mode-manual[]
+    </layout>
+</window>

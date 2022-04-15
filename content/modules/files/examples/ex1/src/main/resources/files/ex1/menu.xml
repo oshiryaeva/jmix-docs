@@ -4,6 +4,7 @@
     <menu id="application" caption="msg://files.ex1/menu.application">
         <item screen="Attachment.browse" caption="msg://files.ex1.screen.attachment/attachmentBrowse.menu"/>
         <item screen="Person.browse" caption="msg://files.ex1.screen.person/personBrowse.menu"/>
+        <item screen="sample_FilesScreen" caption="msg://files.ex1.screen.files/filesScreen.caption"/>
     </menu>
 
 </menu-config>

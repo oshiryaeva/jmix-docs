@@ -26,8 +26,7 @@ include::example$/ex1/src/main/resources/ui/ex1/screen/component/filestorageuplo
 
 To store a file in an entity attribute as a byte array instead of `FileRef`, use the xref:vcl/components/file-upload-field.adoc[FileUploadField] component.
 
-//todo add link to FileStorage
-The uploaded file will be immediately stored in the default FileStorage. To control the saving of the file programmatically, use the <<file-storage-put-mode,fileStoragePutMode>> attribute.
+The uploaded file will be immediately stored in the default xref:files:file-storage.adoc[file storage]. To control the saving of the file programmatically, use the <<file-storage-put-mode,fileStoragePutMode>> attribute.
 
 [[listeners]]
 == Listeners

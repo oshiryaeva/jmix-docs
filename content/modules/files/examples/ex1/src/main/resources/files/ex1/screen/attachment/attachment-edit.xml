@@ -28,13 +28,14 @@
                 width="800"/>
     <!-- tag::files-2[] -->
     <layout spacing="true">
-        <form dataContainer="attachmentDc">
+        <form id="form" dataContainer="attachmentDc">
             <column>
                 <fileStorageUpload id="fileField" property="file"/>
                 <!-- end::files-2[] -->
                 <textField id="descriptionField" property="description"/>
             </column>
         </form>
+        <browserFrame id="browserFrame"/>
         <hbox id="editActions" spacing="true" height="100%">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

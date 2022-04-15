@@ -1,7 +1,7 @@
 = FileUploadField
 :page-aliases: backoffice-ui:vcl/components/file-upload-field.adoc
 
-`FileUploadField` component allows you to upload a file and save it to an entity attribute as a byte array.
+`FileUploadField` component allows you to upload a file and save it to an entity attribute as a xref:files:files-in-database.adoc[byte array].
 
 The component can contain a caption, a link to the uploaded file, and an upload button. When the upload button is clicked, a standard OS file picker window is shown, where the user can select a file.
 

@@ -1,4 +1,4 @@
-= Using File Storage
+= File Storage
 
 File Storage is an abstraction enabling different implementations of how and where the files are stored and providing a unified https://github.com/jmix-framework/jmix/blob/master/jmix-core/core/src/main/java/io/jmix/core/FileStorage.java[interface^] for accessing files and referring to them from the data model entities.
 
@@ -6,65 +6,6 @@ Jmix comes with two file storage implementations: <<local-fs,Local>> and <<aws-f
 
 TIP: You can store files of any size in the file storage, because transferring files to and from the file storage is performed by copying small chunks of data between input and output streams, so files are never fully loaded into memory.
 
-[[examples]]
-== Examples
-
-[[ui-example]]
-=== Working with Files in UI
-
-In this section, we will give an example of working with files in the file storage using the UI components.
-
-Firstly, create an attribute of the `FileRef` type in your entity, for example:
-
-[source,java,indent=0]
-----
-include::example$/ex1/src/main/java/files/ex1/entity/Attachment.java[tags=files]
-----
-
-When you run the application, Studio generates a database migration script for creating a corresponding column of the string type, because `FileRef` has a string representation in the URI format.
-
-For uploading files from a screen of the user interface, use the xref:ui:vcl/components/file-storage-upload-field.adoc[] component bound to the entity attribute:
-
-[source,xml,indent=0]
-----
-include::example$/ex1/src/main/resources/files/ex1/screen/attachment/attachment-edit.xml[tags=files-1;files-2]
-----
-
-To download attached files, add a custom column to the table in the browser screen:
-
-[source,xml,indent=0]
-----
-include::example$/ex1/src/main/resources/files/ex1/screen/attachment/attachment-browse.xml[tags=files]
-----
-
-And define the column generator:
-
-[source,java,indent=0]
-----
-include::example$/ex1/src/main/java/files/ex1/screen/attachment/AttachmentBrowse.java[tags=files]
-----
-<1> Use the `Downloader` bean to download files.
-<2> The `download()` method accepts the `FileRef` value and takes the file from the file storage specified in the `FileRef` object. The name and type of the file are also encoded in `FileRef`, so the web browser correctly chooses whether to download or display the file.
-
-[[file-storage-example]]
-=== Using FileStorage Interface
-
-The following example shows how to work with the https://github.com/Haulmont/jmix-core/blob/master/core/src/main/java/io/jmix/core/FileStorage.java[FileStorage^] interface directly.
-
-The first method saves to file storage a file obtained from a web service. The second method loads a file from the file storage and saves it to the local file system.
-
-The same `Attachment` entity is used as in the previous example.
-
-[source,java,indent=0]
-----
-include::example$/ex1/src/main/java/files/ex1/screen/attachment/AttachmentBrowse.java[tags=file-storage]
-----
-<1> `FileStorageLocator` allows you to work with a particular file storage if you have defined <<multiple-fs,multiple file storages>> in your project. If you have a single file storage (which is a default situation), you can inject the `FileStorage` interface directly.
-<2> Getting an input stream for the web resource. Instead of the `URLConnection` class, you may want to use `HttpClient` introduced in Java 11, or a third-party library like Apache HttpClient.
-<3> Saving the resource content to the file storage. The returned `FileRef` object is a reference to the file in the file storage.
-<4> Saving the reference to an entity attribute.
-<5> Getting an input stream to load the file from the file storage.
-<6> Saving the file to the local file system.
 
 [[local-fs]]
 == Local File Storage
