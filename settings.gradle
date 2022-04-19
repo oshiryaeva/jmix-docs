@@ -36,6 +36,9 @@ project(':dyn-attr-ex1').projectDir = new File(settingsDir, 'content/modules/dyn
 include ':email-ex1'
 project(':email-ex1').projectDir = new File(settingsDir, 'content/modules/email/examples/ex1')
 
+include ':features-ex1'
+project(':features-ex1').projectDir = new File(settingsDir, 'content/modules/features/examples/ex1')
+
 include ':files-ex1'
 project(':files-ex1').projectDir = new File(settingsDir, 'content/modules/files/examples/ex1')
 

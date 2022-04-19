@@ -1,0 +1,3 @@
+= Other Features
+
+This section covers optional functions of the Jmix framework.

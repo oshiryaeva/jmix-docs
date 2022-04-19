@@ -1,0 +1,48 @@
+= Sequence Generation
+
+The sequence generation mechanism enables generating unique numerical sequences via a single API, independent of the DBMS type.
+
+The entry point to this mechanism is the `Sequences` interface which can be obtained with an `@Autowired` injection:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/features/ex1/screen/document/DocumentEdit.java[tags=sequences-inject]
+----
+
+Now you can use the `createNextValue()` method to generate the next number in the sequence passed as the parameter:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/features/ex1/screen/document/DocumentEdit.java[tags=sequences-simple]
+----
+
+The `Sequences` interface provides the following methods:
+
+* `createNextValue()` – returns the next value in a sequence. The mechanism enables simultaneous management of several sequences, identified by arbitrary strings. The name of the sequence from which you want to retrieve the value is passed in the `Sequence.withName()` static method.
++
+Sequences do not require initialization. When `createNextValue()` is called for the first time, the corresponding sequence will be created, and the default value `1` will be returned.
+
+* `getCurrentValue()` – returns the current value of the sequence.
+
+* `setCurrentValue()` – sets the new current value for the sequence. Next time, when you call `createNextValue()` for this sequence, it will return this value + increment.
+
+* `deleteSequence()` – removes the sequence with specified identifier.
+
+[[sequence-usage]]
+== Sequence Usage Example
+
+Each `Sequence` instance is characterized by the name, the data store, the start value, and the incremental step. You can use setters to define these parameters when calling the methods mentioned above, for example:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/features/ex1/screen/document/DocumentEdit.java[tags=sequences-inject;sequences-use]
+----
+<1> Generates new value of the `document_number` sequence.
+<2> Points the `Sequence` to use the xref:data-model:data-stores.adoc#additional[additional data store] by its name. If not set, the main data store is used.
+<3> Sets the start number of `document_number`. If not set, the sequence starts with `1`.
+<4> Defines the incremental step of the sequence. If not set, the increment is `1`.
+
+The implementation of the sequence generation mechanism depends on the DBMS type. The supported types are HSQL, Microsoft SQL Server (2008 and 2012+), MySQL, Oracle, and PostgreSQL. Sequence parameters can also be managed directly in the database by the rules of the particular DBMS.
+
+CAUTION: The `Sequences` implementation is based on database sequences and does not guarantee a continuous sequence without gaps, it guarantees only the uniqueness of the values. Gaps may happen due to some error or a xref:data-access:transactions.adoc[transaction] rollback.
+
