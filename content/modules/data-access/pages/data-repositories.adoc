@@ -1,0 +1,53 @@
+= Jmix Data Repositories
+
+For those who are used to working with Spring data repositories, Jmix provides similar mechanism - the `JmixDataRepository` interface. It extends the functionality of https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/PagingAndSortingRepository.html[PagingAndSortingRepository^] by adding fetch plan parameters to common methods. The data access is implicitly undertaken by xref:data-access:data-manager.adoc[DataManager], while you operate the conventional repository API.
+
+Here are the default methods of the `JmixDataRepository` interface:
+
+* `create()` - xref:data-model:entities.adoc#instantiation[instantiates] a new entity by invoking `Metadata.create()`.
+
+* `findById()` - loads an entity by its `id` according to the passed xref:data-access:fetching.adoc#fetch-plan[fetch plan] or `Optional.empty()` if nothing is found.
+
+* `getById()` - loads an entity by its `id` according to the passed xref:data-access:fetching.adoc#fetch-plan[fetch plan]. If nothing is loaded, an `IllegalStateException` will be thrown.
+
+* `findAll()` - loads all instances of the entity. You can specify the method parameters: a fetch plan, otherwise `FetchPlan.BASE` will be used, the sorting options, or an `Iterable` list of identifiers.
+
+When you create a repository interface, its default methods become available without additional declaration:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/dataaccess/ex1/repository/UserRepository.java[tags=jmix-repository-1;jmix-repository-2]
+----
+
+Below is an example of using the repository `findAll()` method with a fetch plan. Firstly, inject the repositories in your service or controller:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/dataaccess/ex1/app/UserAccess.java[tags=inject-repository;inject-fetch-plan-repository]
+----
+
+Now call the repository methods:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/dataaccess/ex1/app/UserAccess.java[tags=repository-find-all]
+----
+
+Besides these default methods, the `JmixDataRepository` allows you to use the derived query methods by analogy with the standard JPA repositories. The method declaration should follow the naming convention: _introducer_ + `By` + _criteria_. The supported introducers are `find`, `read`, `query`, `count`, and `get`, such key words as `Distinct`, `First` or `Top` are also supported.
+
+Example of derived methods declaration:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/dataaccess/ex1/repository/UserRepository.java[tags=jmix-repository-methods]
+----
+
+You can also use the `@Query` annotation to set a JPQL query, for example:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/dataaccess/ex1/repository/UserRepository.java[tags=jmix-repository-query]
+----
+
+TIP: Jmix Data Repositories is an optional functionality, so if you don’t need it, you can disable it by adding `jmix.core.dataRepositories.enabled=false` to `application.properties`. This may be useful to avoid bean overriding conflicts in case you use different types of repositories in your project.
+
