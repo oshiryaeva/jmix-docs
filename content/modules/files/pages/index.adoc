@@ -4,5 +4,102 @@ In this section, we describe how to work with files uploaded to the system by us
 
 There are two ways to store files in a Jmix application:
 
-* In the xref:files-in-database.adoc[database], using entity fields of the byte array type.
-* In a separate xref:file-storage.adoc[file storage] located in the local file system, in the cloud, or based on an external service. In this case, the file is bound to the data model using an entity attribute of the `FileRef` type.
+* In the <<files-in-database,database>>, using entity fields of the byte array type.
+* In a separate <<file-storage,file storage>> located in the local file system, in the cloud, or based on an external service. In this case, the file is bound to the data model using an entity attribute of the `FileRef` type.
+
+[[files-in-database]]
+== Storing Files in Database
+:page-aliases: files:files-in-database.adoc
+
+// todo Explain how to upload/download files in REST when https://github.com/Haulmont/jmix-core/issues/200 is fixed
+
+The most common use case of storing files in the database is using entity fields of the byte array type.
+
+CAUTION: Save only small files in the database: thumbnails, icons, etc., because the whole file is placed in memory when it is uploaded or downloaded.
+
+Suppose you want to store small avatars for the `Person` entity. Firstly, create an attribute of the byte array (`byte[]`) type in your entity, for example:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/files/ex1/entity/Person.java[tags=file]
+----
+
+When you run the application, Studio generates a database migration script for creating a corresponding column of the type appropriate for your database. For example, for PostgreSQL it is `bytea`.
+
+Now you can use the xref:ui:vcl/components/file-upload-field.adoc[] component bound to the `photo` attribute to upload the file from a user interface, and the `Downloader` bean to download the file from UI or a service. If you create an editor screen with Studio, the `FileUploadField` will be added to your screen automatically.
+
+See the next sections of this documentation for more details.
+
+[[file-storage]]
+== File Storage
+:page-aliases: files:file-storage.adoc
+
+File Storage is an abstraction enabling different implementations of how and where the files are stored and providing a unified https://github.com/jmix-framework/jmix/blob/master/jmix-core/core/src/main/java/io/jmix/core/FileStorage.java[interface^] for accessing files and referring to them from the data model entities.
+
+Jmix comes with two file storage implementations: <<local-fs,Local>> and <<aws-fs,AWS>>. When you create a new project in Studio, it includes the local implementation.
+
+TIP: You can store files of any size in the file storage, because transferring files to and from the file storage is performed by copying small chunks of data between input and output streams, so files are never fully loaded into memory.
+
+
+[[local-fs]]
+=== Local File Storage
+
+The Local File Storage implementation allows you to store files on the local file system of the application server or on any network-attached storage (NAS).
+
+To use Local File Storage in your application, make sure your `build.gradle` file contains the following line in the `dependencies` section:
+
+[source,groovy,indent=0]
+----
+include::example$/ex1/build.gradle[tags=dependencies]
+----
+
+Files are stored in a special directory structure which is maintained by the file storage. By default, the root directory is `${user.dir}/.jmix/work/filestorage`, where `${user.dir}` is the user working directory (where JVM was started). You can change it by specifying a path in the `jmix.localfs.storage-dir` application property, for example:
+
+[source,properties]
+----
+jmix.localfs.storage-dir = /opt/file-storage
+----
+
+[[aws-fs]]
+=== AWS File Storage
+
+The AWS File Storage implementation allows you to store files in https://aws.amazon.com/s3[Amazon S3^].
+
+To use AWS File Storage in your application, install the AWS File Storage add-on from the marketplace as described in the xref:ROOT:add-ons.adoc[Add-ons] section, or manually add the following line to the `dependencies` section of your `build.gradle` file:
+
+[source,groovy,indent=0]
+----
+include::example$/ex1/build.gradle[tags=dependencies-aws]
+----
+
+If you plan to use AWS File Storage only, remove the Local File Storage dependency from `build.gradle`. Otherwise, see the <<multiple-fs,next section>> for how to configure multiple file storages.
+
+Define application properties:
+
+[source,properties,indent=0]
+----
+include::example$/ex1/src/main/resources/application.properties[tags=aws-config]
+----
+
+[[multiple-fs]]
+=== Using Multiple File Storages
+
+If you want to use more than one file storage in your application, specify a default one using its name in the application property:
+
+[source,properties]
+----
+include::example$/ex1/src/main/resources/application.properties[tags=default-fs]
+----
+
+The Local File Storage name is `fs`, the AWS File Storage name is `s3`.
+
+If you want to use multiple storages of the same type, define additional storages with unique names. For example, to define an additional Local File Storage with the root directory at `/var/tmp/myfs`, add the following code to the main application class:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/files/ex1/SampleFilesApplication.java[tags=multiple-fs]
+----
+
+To work with different file storages programmatically, use the `FileStorageLocator` bean. It allows you to get a file storage by its name.
+
+The xref:ui:vcl/components/file-storage-upload-field.adoc[] component has the `fileStorage` attribute to specify a file storage name. If it's not set, the component uses the default file storage.
