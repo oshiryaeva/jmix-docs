@@ -8,6 +8,7 @@ import io.jmix.data.PersistenceHints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -23,14 +24,23 @@ public class OrderService {
     @Autowired
     private DataManager dataManager;
 
+    @Autowired
+    private TransactionTemplate transactionTemplate;
+
     // tag::transaction-template[]
     @Autowired
     private PlatformTransactionManager transactionManager;
 
-    private TransactionTemplate transactionTemplate;
+    // joins existing transaction
+    public TransactionTemplate getTransactionTemplate() {
+        return new TransactionTemplate(transactionManager);
+    }
 
-    public void setTransactionTemplate() {
-        this.transactionTemplate = new TransactionTemplate(transactionManager);
+    // always creates new transaction
+    public TransactionTemplate getRequiresNewTransactionTemplate() {
+        TransactionTemplate tt = new TransactionTemplate(transactionManager);
+        tt.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        return tt;
     }
     // end::transaction-template[]
 

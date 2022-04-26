@@ -66,7 +66,7 @@ include::example$/ex1/src/main/java/dataaccess/ex1/bean/TransactionService.java[
 ----
 <1> Here, the `@Qualifier` annotation allows Spring to select the bean that we defined above for the `db1` data store.
 
-If you don't need `TransactionTemplate` to be available everywhere in the project, you can set it up locally in a bean using `PlatformTransactionManager`, for example:
+If you don't need `TransactionTemplate` to be available everywhere in the project, you can create it locally in a bean using `PlatformTransactionManager`. The example below shows creation of two templates with different propagation behavior:
 
 [source,java,indent=0]
 ----
