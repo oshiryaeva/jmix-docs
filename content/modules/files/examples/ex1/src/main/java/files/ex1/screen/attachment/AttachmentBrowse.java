@@ -69,7 +69,7 @@ public class AttachmentBrowse extends StandardLookup<Attachment> {
         saveToLocalFile(attachment, Paths.get("."));
     }
 
-    // tag::file-storage-1[]
+    // tag::file-storage[]
     @Autowired
     private FileStorageLocator fileStorageLocator; // <1>
     @Autowired
@@ -92,23 +92,21 @@ public class AttachmentBrowse extends StandardLookup<Attachment> {
             throw new RuntimeException("Error getting image", e);
         }
     }
-    // end::file-storage-1[]
 
-    // tag::file-storage-2[]
     private void saveToLocalFile(Attachment attachment, Path path) {
         FileStorage fileStorage = fileStorageLocator.getDefault();
         FileRef fileRef = attachment.getFile();
-        // <1>
+        // <5>
         InputStream inputStream = fileStorage.openStream(fileRef);
         try {
-            // <2>
+            // <6>
             Files.copy(inputStream, path.resolve(fileRef.getFileName()),
                     StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new RuntimeException("Error saving image", e);
         }
     }
-    // end::file-storage-2[]
+    // end::file-storage[]
 
 
     private void openAttachmentInNewWindow(Attachment attachment) {

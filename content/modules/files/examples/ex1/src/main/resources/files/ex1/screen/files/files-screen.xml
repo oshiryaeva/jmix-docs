@@ -5,7 +5,7 @@
         // tag::put-mode-manual[]
         <fileStorageUpload id="fileField"
                            property="image"
-                           fileStoragePutMode="MANUAL"/>
+                           fileStoragePutMode="MANUAL"/> <!--1-->
         // end::put-mode-manual[]
     </layout>
 </window>

@@ -1,20 +1,28 @@
 package files.ex1.screen.files;
 
+import io.jmix.core.CoreProperties;
 import io.jmix.core.FileRef;
+import io.jmix.core.FileStorageLocator;
 import io.jmix.ui.Notifications;
+import io.jmix.ui.UiProperties;
 import io.jmix.ui.component.FileStorageUploadField;
 import io.jmix.ui.component.SingleFileUploadField;
+import io.jmix.ui.download.ByteArrayDataProvider;
+import io.jmix.ui.download.DownloadFormat;
+import io.jmix.ui.download.Downloader;
+import io.jmix.ui.download.FileDataProvider;
 import io.jmix.ui.screen.Screen;
 import io.jmix.ui.screen.Subscribe;
 import io.jmix.ui.screen.UiController;
 import io.jmix.ui.screen.UiDescriptor;
 import io.jmix.ui.upload.TemporaryStorage;
 import io.jmix.ui.upload.TemporaryStorageManagementFacade;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
 
 @UiController("sample_FilesScreen")
 @UiDescriptor("files-screen.xml")
@@ -37,13 +45,22 @@ public class FilesScreen extends Screen {
 
     @Autowired
     private Notifications notifications;
+    @Autowired
+    private Downloader downloader;
+    @Autowired
+    private UiProperties uiProperties;
+    @Autowired
+    private CoreProperties coreProperties;
+
+    @Autowired
+    private FileStorageLocator fileStorageLocator;
 
     //tag::temporary-storage-2[]
     @Subscribe("fileField")
     public void onFileFieldFileUploadSucceed(SingleFileUploadField.FileUploadSucceedEvent event) {
         File file = temporaryStorage.getFile(fileField.getFileId()); // <1>
         if (file != null) {
-            FileRef fileRef = temporaryStorage.putFileIntoStorage(fileField.getFileId(), event.getFileName());
+            FileRef fileRef = temporaryStorage.putFileIntoStorage(fileField.getFileId(), event.getFileName()); // <2>
             fileField.setValue(fileRef);
         }
     }
@@ -67,5 +84,32 @@ public class FilesScreen extends Screen {
 
     private void processFile(FileOutputStream stream) {
 
+    }
+
+    private void downloadFileWithByteArrayDataProvider() {
+        try {
+            URLConnection connection = new URL("https://picsum.photos/300").openConnection();
+            try (InputStream inputStream = connection.getInputStream()) {
+                //tag::byte-array-data-provider[]
+                byte[] data = IOUtils.toByteArray(inputStream);
+                ByteArrayDataProvider dataProvider = new ByteArrayDataProvider(data,
+                        uiProperties.getSaveExportedByteArrayDataThresholdBytes(), // <1>
+                        coreProperties.getTempDir()); // <2>
+                downloader.download(dataProvider, "fileName");
+                //end::byte-array-data-provider[]
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error getting image", e);
+        }
+    }
+
+    private void downloadFileWithFileDataProvider(FileRef fileRef) {
+        //tag::file-data-provider[]
+        String fileName = fileRef.getFileName();
+        downloader.download(new FileDataProvider(fileRef,
+                        fileStorageLocator.getByName("additional-storage")), // <1>
+                fileName, // <2>
+                DownloadFormat.JSON); // <3>
+        //end::file-data-provider[]
     }
 }

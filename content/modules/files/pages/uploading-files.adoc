@@ -3,45 +3,15 @@
 In this section, we will show how to manage the file upload process from the UI and via the dedicated programmatic interfaces.
 Consult the xref:rest:files-api.adoc[Files API] section to learn how to manage files through the REST API.
 
-== Uploading Files in UI
+== UI Components
 
-[[db-upload]]
-=== Uploading to Database
+Jmix provides a set of UI components for files upload: xref:ui:vcl/components/file-upload-field.adoc[], xref:ui:vcl/components/file-multi-upload-field.adoc[], and xref:ui:vcl/components/file-storage-upload-field.adoc[].
 
-For uploading the file from a user interface to DB, you can use the xref:ui:vcl/components/file-upload-field.adoc[] component bound to the entity attribute. If the file is an image, you can use the xref:ui:vcl/components/image.adoc[] component to display the image on the screen. For example:
+For uploading a file from user interface xref:files:files-in-database.adoc[to DB], you can use the `FileUploadField` component bound to the entity attribute. If the file is an image, you can use the xref:ui:vcl/components/image.adoc[] component to display the image on the screen.
 
-[source,xml,indent=0]
-----
-include::example$/ex1/src/main/resources/files/ex1/screen/person/person-edit.xml[tags=file-1;file-2;file-4]
-----
+To upload a file from the user’s computer to a xref:files:file-storage.adoc[file storage], use the `FileMultiUploadField` and `FileStorageUploadField` components.
 
-<1> `FileUploadField` component allows users to upload a file and store it in an entity attribute.
-<2> `Image` component displays the content of the entity attribute.
-
-[[ui-upload]]
-=== Uploading to File Storage
-
-Files from the user’s computer can be uploaded to a file storage using the xref:ui:vcl/components/file-multi-upload-field.adoc[FileMultiUploadField] and xref:ui:vcl/components/file-storage-upload-field.adoc[FileStorageUploadField] components.
-
-In this section, we will give an example of working with files in the file storage using the UI components.
-
-Firstly, create an attribute of the `FileRef` type in your entity, for example:
-
-[source,java,indent=0]
-----
-include::example$/ex1/src/main/java/files/ex1/entity/Attachment.java[tags=files]
-----
-
-When you run the application, Studio generates a database migration script for creating a corresponding column of the string type, because `FileRef` has a string representation in the URI format.
-
-For uploading files from a screen of the user interface, use the xref:ui:vcl/components/file-storage-upload-field.adoc[] component bound to the entity attribute:
-
-[source,xml,indent=0]
-----
-include::example$/ex1/src/main/resources/files/ex1/screen/attachment/attachment-edit.xml[tags=files-1;files-2]
-----
-
-By default, the component contains a caption, a link to the uploaded file, and an upload button:
+By default, the upload component contains a caption, a link to the uploaded file, and an upload button:
 
 image::file-storage-upload-field.png[align="center"]
 
@@ -49,76 +19,39 @@ When the upload button is clicked, a standard OS file picker window is shown, wh
 
 image::file-storage-upload-field-with-file.png[align="center"]
 
-[[file-storage-upload]]
-== Uploading with FileStorage Interface
+You can find the complete examples of working with these UI components in the components' documentation.
 
-The following example shows how to work with the https://github.com/jmix-framework/jmix/blob/master/jmix-core/core/src/main/java/io/jmix/core/FileStorage.java[FileStorage^] interface directly. This interface is designed to store and load files defined by file references.
+[[using-temporary-storage]]
+== Using TemporaryStorage
 
-The first method saves a file obtained from a web service to the file storage. The same `Attachment` entity is used as in the <<ui-upload,previous example>>:
+The `FileStorageUploadField` component has the xref:ui:vcl/components/file-storage-upload-field.adoc#file-storage-put-mode[fileStoragePutMode] attribute with the default value `IMMEDIATE`. If you set it to `MANUAL`, the component uploads the file to the temporary storage in the file system of the application, and gives you full control over the uploaded file: you can transfer the file to the file storage as is, pre-process it, or do whatever you need with the file without saving it to the file storage at all.
 
-[source,java,indent=0]
-----
-include::example$/ex1/src/main/java/files/ex1/screen/attachment/AttachmentBrowse.java[tags=file-storage-1]
-----
-<1> `FileStorageLocator` allows you to work with a particular file storage if you have defined xref:file-storage.adoc#multiple-fs[multiple file storages] in your project. If you have a single file storage (which is a default situation), you can inject the `FileStorage` interface directly.
-<2> Getting an input stream for the web resource. Instead of the `URLConnection` class, you may want to use `HttpClient` introduced in Java 11, or a third-party library like Apache HttpClient.
-<3> Saving the resource content to the file storage. The returned `FileRef` object is a reference to the file in the file storage.
-<4> Saving the reference to an entity attribute.
+The same is true for the xref:ui:vcl/components/file-multi-upload-field.adoc[FileMultiUploadField] component: it just uploads files to the temporary storage and notifies your code that the upload is complete.
 
-The second method loads a file from the file storage and saves it to the local file system.
+The `TemporaryStorage` interface provides an API to create temporary files, save them to the file storage, or remove them.
 
-[source,java,indent=0]
-----
-include::example$/ex1/src/main/java/files/ex1/screen/attachment/AttachmentBrowse.java[tags=file-storage-2]
-----
-<1> Getting an input stream to load the file from the file storage.
-<2> Saving the file to the local file system.
-
-TIP: Use `FileStorage` directly only for highly-available external services. In other cases, for the storage integrity it is preferable to use `TemporaryStorage`.
-
-[[file-storage-manual-upload]]
-== Manual Uploading with TemporaryStorage Interface
-
-The `FileStorageUploadField` components has the xref:ui:vcl/components/file-storage-upload-field.adoc#file-storage-put-mode[fileStoragePutMode] attribute with the default value `IMMEDIATE`. Setting it to `MANUAL` allows you to control the saving of the file programmatically instead of saving it immediately to the default file storage. The manual mode may be used to add some extra logic to the upload process: for example, changing the file's attribute values, or processing the uploaded file without saving it to storage at all.
-
-CAUTION: Working with `TemporaryStorage` is not available through REST API, because it keeps temporary files in the local file system and thus cannot be clustered.
-
-The `TemporaryStorage` interface provides an API to create temporary files, save them to the file storage, or remove them. Below is an example of using temporary storage from UI.
-
-Example of the `fileStorageUpload` field with `MANUAL` upload mode:
+Below is an example of using `FileStorageUploadField` in manual mode to transfer the uploaded file from temporary storage to the file storage.
 
 [source,xml,indent=0]
 ----
 include::example$/ex1/src/main/resources/files/ex1/screen/files/files-screen.xml[tags=put-mode-manual]
 ----
-
-Saving the file to storage as `FileRef` via `TemporaryStorage`:
+<1> Set `fileStoragePutMode="MANUAL"` for the upload field component.
 
 [source,java,indent=0]
 ----
 include::example$/ex1/src/main/java/files/ex1/screen/files/FilesScreen.java[tags=temporary-storage-1;temporary-storage-2]
 ----
+<1> Get local file from the temporary storage using identifier provided by the upload field.
+<2> Transfer local file to the file storage.
 
-If you only need to process the file somehow without saving it to storage, use the `deleteFile()` method of `TemporaryStorage` after using the file, for example:
+The `putFileIntoStorage()` method also removes the temporary local file.
+
+If you only need to process the file locally without saving it to file storage, use the `deleteFile()` method of `TemporaryStorage` after working with the file, for example:
 
 [source,java,indent=0]
 ----
 include::example$/ex1/src/main/java/files/ex1/screen/files/FilesScreen.java[tags=get-and-delete]
 ----
 
-
-`TemporaryStorage` automatically removes all the files in the `temp` directory which are older than 2 days. To customize this schedule, you can inject the `TemporaryStorageManagementFacade` bean:
-
-[source,java,indent=0]
-----
-include::example$/ex1/src/main/java/files/ex1/screen/files/FilesScreen.java[tags=temporary-storage-clean-1]
-----
-
-and call the `clearTempDirectory()` method manually, for example, in a service or a xref:quartz:index.adoc[Quartz] job:
-
-[source,java,indent=0]
-----
-include::example$/ex1/src/main/java/files/ex1/screen/files/FilesScreen.java[tags=temporary-storage-clean-2]
-----
-
-See the xref:ui:vcl/components/file-multi-upload-field.adoc[FileMultiUploadField] and xref:ui:vcl/components/file-storage-upload-field.adoc[FileStorageUploadField] components' pages for more examples on working with `TemporaryStorage`.
+The temporary storage tends to accumulate files that were not deleted for various reasons. So it provides a JMX interface for removing such old unused files. You can find it by *jmix.ui:type=TemporaryStorage* name in *Administration -> JMX Console* screen. The MBean has the `clearTempDirectory()` method that removes all files from the temporary directory of the application (`.jmix/temp` by default) which are older than 2 days. You can call this method manually, or use a xref:quartz:index.adoc[Quartz] job to do it periodically. In a job, you should inject the `TemporaryStorageManagementFacade` bean and call its `clearTempDirectory()` method.

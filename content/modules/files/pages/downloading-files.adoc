@@ -1,10 +1,13 @@
-= Downloading Files
+= Downloading and Displaying Files
 
-In this section, we will show how to manage the file download process from the UI and via the dedicated programmatic interfaces.
+In this section, we will show how to manage the file download process and display the downloaded files.
 Consult the xref:rest:files-api.adoc[Files API] section to learn how to manage files through the REST API.
 
+[[downloader]]
+== Using Downloader
+
 [[download-from-storage]]
-== Downloading Files from Storage
+=== Downloading from File Storage
 
 The `Downloader` bean is used to download files. Its `download()` method accepts the `FileRef` value and takes the file from the file storage, specified in the `FileRef` object. The name and type of the file are also encoded in `FileRef`, so the web browser correctly chooses whether to download or display the file.
 
@@ -24,10 +27,12 @@ include::example$/ex1/src/main/java/files/ex1/screen/attachment/AttachmentBrowse
 <1> Use the `Downloader` bean to download files.
 <2> The `download()` method accepts the `FileRef` value and takes the file from the file storage specified in the `FileRef` object. The name and type of the file are also encoded in `FileRef`, so the web browser correctly chooses whether to download or display the file.
 
-[[download-byte-array]]
-== Downloading Files as Byte Array
+[[download-arbitrary]]
+=== Downloading Arbitrary Resources
 
-Besides `FileRef`, you can download files as byte arrays. It is the case, for example, of storing files xref:files-in-database.adoc[in database].  Generally, you should pass the byte array itself and the target file name. Defining the format is optional, as `FileRef` already contains the file type, but for byte arrays we recommend setting the download format explicitly:
+==== Byte Array
+
+Besides `FileRef`, you can download files as byte arrays. Generally, you should pass the byte array itself and the target file name. Defining the format is optional, as `FileRef` already contains the file type, but for byte arrays we recommend setting the download format explicitly:
 
 [source,java,indent=0]
 ----
@@ -49,9 +54,9 @@ include::example$/ex1/src/main/java/files/ex1/screen/attachment/AttachmentBrowse
 ----
 
 [[db-download]]
-=== Downloading from Database
+==== Byte Array from Database
 
-Below is the complete example of downloading the file saved in DB as an entity attribute. We will use the same `Person` entity as described in xref:files-in-database.adoc[].
+Below is the complete example of downloading a file saved in database as an entity attribute. We will use the same `Person` entity as described in xref:files-in-database.adoc[].
 
 The screen descriptor contains a button with a click handler:
 
@@ -71,12 +76,36 @@ include::example$/ex1/src/main/java/files/ex1/screen/person/PersonEdit.java[tags
 <2> Define the downloaded file name.
 <3> If you know the file format, specify it in the last argument of the `download()` method. Depending on the format, the web browser either downloads the file or shows it in a tab.
 
+[[download-data-provider]]
+==== Using DownloadDataProvider
+
+To fine-tune the download process, you can use implementations of the `DownloadDataProvider` interface to provide data for `Downloader`.
+
+For example, `ByteArrayDataProvider` enables setting the threshold in bytes, so that data beyond the threshold will be saved to a temporary file to prevent HTTP session memory leaks:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/files/ex1/screen/files/FilesScreen.java[tags=byte-array-data-provider]
+----
+<1> Saved data threshold value can also be specified in the `application.properties` file.
+<2> If needed, you can pass an arbitrary temporary directory instead the default one.
+
+The `FileDataProvider` can be used to download a file as `FileRef` from a particular file storage:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/files/ex1/screen/files/FilesScreen.java[tags=file-data-provider]
+----
+<1> The file storage name is passed to the data provider with the `FileStorageLocator` bean.
+<2> The downloaded file name may be different from that stored in `FileRef`.
+<3> You can specify a particular download format, too.
+
 [[view-files]]
-== Displaying Files
+== Displaying Files in Web Browser
 
-=== In a New Window
+Downloaded files can be displayed in web browser either in a new browser tab, or in the Jmix UI screen.
 
-You can set in the `jmix.ui.viewFileExtensions` application property the list of file extensions that should always be displayed in a new browser tab instead of being downloaded, for example:
+You can set in the `jmix.ui.viewFileExtensions` application property the list of file extensions that should always be displayed in a new tab instead of being downloaded, for example:
 
 [source,properties,indent=0]
 ----
@@ -90,9 +119,15 @@ Another option is to use the `setShowNewWindow()` method: pass `true` if you wan
 include::example$/ex1/src/main/java/files/ex1/screen/attachment/AttachmentBrowse.java[tags=show-file]
 ----
 
-=== In the Same Tab
+=== Using Image
 
-Use the xref:ui:vcl/components/browser-frame.adoc[BrowserFrame] component to display content like web pages, PDF files, and images in the UI screen.
+xref:ui:vcl/components/image.adoc[] component is designed for displaying images from different sources in UI screens. The component can be bound to a data container to display a `FileRef` attribute of an entity, or use an arbitrary xref:ui:vcl/components/image.adoc#resources[resource type] to display images located, for example, in classpath, local file system, or downloaded from a web resource on the fly.
+
+See the component's documentation for detailed usage examples.
+
+=== Using BrowserFrame
+
+Use the xref:ui:vcl/components/browser-frame.adoc[BrowserFrame] component to display content like web pages, PDF files, and images in Jmix UI screens. This component should be used when you don't need to download the file to the local file system but only want to display it.
 
 [source,java,indent=0]
 ----
@@ -107,3 +142,5 @@ include::example$/ex1/src/main/java/files/ex1/screen/attachment/AttachmentEdit.j
 ----
 
 image::file-storage-browser-frame.png[align="center"]
+
+See the component's documentation for detailed usage examples.
