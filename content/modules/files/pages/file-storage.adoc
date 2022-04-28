@@ -1,0 +1,71 @@
+= File Storage
+
+File Storage is an abstraction enabling different implementations of how and where the files are stored and providing a unified https://github.com/jmix-framework/jmix/blob/master/jmix-core/core/src/main/java/io/jmix/core/FileStorage.java[interface^] for accessing files and referring to them from the data model entities.
+
+Jmix comes with two file storage implementations: <<local-fs,Local>> and <<aws-fs,AWS>>. When you create a new project in Studio, it includes the local implementation.
+
+TIP: You can store files of any size in the file storage, because transferring files to and from the file storage is performed by copying small chunks of data between input and output streams, so files are never fully loaded into memory.
+
+
+[[local-fs]]
+== Local File Storage
+
+The Local File Storage implementation allows you to store files on the local file system of the application server or on any network-attached storage (NAS).
+
+To use Local File Storage in your application, make sure your `build.gradle` file contains the following line in the `dependencies` section:
+
+[source,groovy,indent=0]
+----
+include::example$/ex1/build.gradle[tags=dependencies]
+----
+
+Files are stored in a special directory structure which is maintained by the file storage. By default, the root directory is `${user.dir}/.jmix/work/filestorage`, where `${user.dir}` is the user working directory (where JVM was started). You can change it by specifying a path in the `jmix.localfs.storage-dir` application property, for example:
+
+[source,properties]
+----
+jmix.localfs.storage-dir = /opt/file-storage
+----
+
+[[aws-fs]]
+== AWS File Storage
+
+The AWS File Storage implementation allows you to store files in https://aws.amazon.com/s3[Amazon S3^].
+
+To use AWS File Storage in your application, install the AWS File Storage add-on from the marketplace as described in the xref:ROOT:add-ons.adoc[Add-ons] section, or manually add the following line to the `dependencies` section of your `build.gradle` file:
+
+[source,groovy,indent=0]
+----
+include::example$/ex1/build.gradle[tags=dependencies-aws]
+----
+
+If you plan to use AWS File Storage only, remove the Local File Storage dependency from `build.gradle`. Otherwise, see the <<multiple-fs,next section>> for how to configure multiple file storages.
+
+Define application properties:
+
+[source,properties,indent=0]
+----
+include::example$/ex1/src/main/resources/application.properties[tags=aws-config]
+----
+
+[[multiple-fs]]
+== Using Multiple File Storages
+
+If you want to use more than one file storage in your application, specify a default one using its name in the application property:
+
+[source,properties]
+----
+include::example$/ex1/src/main/resources/application.properties[tags=default-fs]
+----
+
+The Local File Storage name is `fs`, the AWS File Storage name is `s3`.
+
+If you want to use multiple storages of the same type, define additional storages with unique names. For example, to define an additional Local File Storage with the root directory at `/var/tmp/myfs`, add the following code to the main application class:
+
+[source,java,indent=0]
+----
+include::example$/ex1/src/main/java/files/ex1/SampleFilesApplication.java[tags=multiple-fs]
+----
+
+To work with different file storages programmatically, use the `FileStorageLocator` bean. It allows you to get a file storage by its name.
+
+The xref:ui:vcl/components/file-storage-upload-field.adoc[] component has the `fileStorage` attribute to specify a file storage name. If it's not set, the component uses the default file storage.

@@ -1,6 +1,6 @@
 = Uploading Files
 
-In this section, we will show how to upload files using UI components and Java API provided by Jmix.
+In this section, we will show how to manage the file upload process from the UI and via the dedicated programmatic interfaces.
 Consult the xref:rest:files-api.adoc[Files API] section to learn how to manage files through the REST API.
 
 == Uploading Files in UI
@@ -8,7 +8,7 @@ Consult the xref:rest:files-api.adoc[Files API] section to learn how to manage f
 [[db-upload]]
 === Uploading to Database
 
-For uploading a file from the user's computer to DB, you can use the xref:ui:vcl/components/file-upload-field.adoc[] component bound to an entity attribute. If the file is an image, you can use the xref:ui:vcl/components/image.adoc[] component to display the image on the screen. For example:
+For uploading the file from a user interface to DB, you can use the xref:ui:vcl/components/file-upload-field.adoc[] component bound to the entity attribute. If the file is an image, you can use the xref:ui:vcl/components/image.adoc[] component to display the image on the screen. For example:
 
 [source,xml,indent=0]
 ----
