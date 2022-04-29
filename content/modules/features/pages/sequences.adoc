@@ -1,8 +1,8 @@
 = Sequence Generation
 
-The sequence generation mechanism enables generating unique numerical sequences via a single API, independent of the DBMS type.
+The sequence generation mechanism enables obtaining unique numerical values via a single API, independent of the DBMS type.
 
-The entry point to this mechanism is the `Sequences` interface which can be obtained with an `@Autowired` injection:
+The entry point to this mechanism is the `Sequences` interface which can be injected to a bean or a screen:
 
 [source,java,indent=0]
 ----
@@ -28,6 +28,10 @@ Sequences do not require initialization. When `createNextValue()` is called for 
 
 * `deleteSequence()` – removes the sequence with specified identifier.
 
+The implementation of the sequence generation mechanism depends on the DBMS type. The supported types are HSQL, Microsoft SQL Server, MySQL, Oracle, and PostgreSQL. Sequence parameters can also be managed directly in the database by the rules of the particular DBMS.
+
+CAUTION: The `Sequences` implementation is based on database sequences or autoincrement fields and does not guarantee a continuous sequence without gaps, it guarantees only the uniqueness of the values. Gaps may happen due to an error or a transaction rollback.
+
 [[sequence-usage]]
 == Sequence Usage Example
 
@@ -41,8 +45,3 @@ include::example$/ex1/src/main/java/features/ex1/screen/document/DocumentEdit.ja
 <2> Points the `Sequence` to use the xref:data-model:data-stores.adoc#additional[additional data store] by its name. If not set, the main data store is used.
 <3> Sets the start number of `document_number`. If not set, the sequence starts with `1`.
 <4> Defines the incremental step of the sequence. If not set, the increment is `1`.
-
-The implementation of the sequence generation mechanism depends on the DBMS type. The supported types are HSQL, Microsoft SQL Server (2008 and 2012+), MySQL, Oracle, and PostgreSQL. Sequence parameters can also be managed directly in the database by the rules of the particular DBMS.
-
-CAUTION: The `Sequences` implementation is based on database sequences and does not guarantee a continuous sequence without gaps, it guarantees only the uniqueness of the values. Gaps may happen due to some error or a xref:data-access:transactions.adoc[transaction] rollback.
-
